@@ -10,6 +10,7 @@
             "dialect": "sqlite",
             "storage": "./db.hackmd.sqlite"
         }
+        "allowfreeurl": true
     },
     "production": {
         "domain": "localhost",
@@ -21,6 +22,8 @@
             "port": "5432",
             "dialect": "postgres"
         },
+
+        "allowfreeurl": true,
         "facebook": {
             "clientID": "change this",
             "clientSecret": "change this"
