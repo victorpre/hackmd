@@ -792,6 +792,7 @@ function changeMode (type) {
   }
   if (appState.currentMode === modeType.edit || appState.currentMode === modeType.both) {
     ui.toolbar.uploadImage.fadeIn()
+    ui.toolbar.editorToolbar.fadeIn()
     // add and update status bar
     if (!editorInstance.statusBar) {
       editorInstance.addStatusBar()
@@ -802,6 +803,7 @@ function changeMode (type) {
     editor.setOption('foldGutter', true)
   } else {
     ui.toolbar.uploadImage.fadeOut()
+    ui.toolbar.editorToolbar.fadeOut()
   }
   if (appState.currentMode !== modeType.edit) {
     $(document.body).css('background-color', 'white')
