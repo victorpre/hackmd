@@ -803,6 +803,7 @@ function changeMode (type) {
     editor.setOption('foldGutter', true)
   } else {
     ui.toolbar.uploadImage.fadeOut()
+    ui.toolbar.editorToolbar.fadeOut()
   }
   if (appState.currentMode !== modeType.edit) {
     $(document.body).css('background-color', 'white')
