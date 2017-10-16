@@ -5,6 +5,7 @@ HackMD
 
 [![Join the chat at https://gitter.im/hackmdio/hackmd][gitter-image]][gitter-url]
 [![build status][travis-image]][travis-url]
+[![version][github-version-badge]][github-release-page]
 
 
 HackMD lets you create realtime collaborative markdown notes on all platforms.  
@@ -153,6 +154,10 @@ Environment variables (will overwrite other server configs)
 | HMD_S3_SECRET_ACCESS_KEY | no example | AWS secret key |
 | HMD_S3_REGION | `ap-northeast-1` | AWS S3 region |
 | HMD_S3_BUCKET | no example | AWS S3 bucket name |
+| HMD_HSTS_ENABLE | ` true`  | set to enable [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) if HTTPS is also enabled (default is ` true`) |
+| HMD_HSTS_INCLUDE_SUBDOMAINS | `true` | set to include subdomains in HSTS (default is `true`) |
+| HMD_HSTS_MAX_AGE | `31536000` | max duration in seconds to tell clients to keep HSTS status (default is a year) |
+| HMD_HSTS_PRELOAD | `true` | whether to allow preloading of the site's HSTS status (e.g. into browsers) |
 
 Application settings `config.json`
 ---
@@ -165,6 +170,7 @@ Application settings `config.json`
 | port | `80` | web app port |
 | alloworigin | `['localhost']` | domain name whitelist |
 | usessl | `true` or `false` | set to use ssl server (if true will auto turn on `protocolusessl`) |
+| hsts | `{"enable": "true", "maxAgeSeconds": "31536000", "includeSubdomains": "true", "preload": "true"}` | [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) options to use with HTTPS (default is the example value, max age is a year) |
 | protocolusessl | `true` or `false` | set to use ssl protocol for resources path (only applied when domain is set) |
 | urladdport | `true` or `false` | set to add port on callback url (port 80 or 443 won't applied) (only applied when domain is set) |
 | usecdn | `true` or `false` | set to use CDN resources or not (default is `true`) |
@@ -233,5 +239,7 @@ See more at [http://operational-transformation.github.io/](http://operational-tr
 [gitter-url]: https://gitter.im/hackmdio/hackmd?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 [travis-image]: https://travis-ci.org/hackmdio/hackmd.svg?branch=master
 [travis-url]: https://travis-ci.org/hackmdio/hackmd
+[github-version-badge]: https://img.shields.io/github/release/hackmdio/hackmd.svg
+[github-release-page]: https://github.com/hackmdio/hackmd/releases
 [standardjs-image]: https://cdn.rawgit.com/feross/standard/master/badge.svg
 [standardjs-url]: https://github.com/feross/standard
