@@ -8,57 +8,57 @@ HackMD
 [![version][github-version-badge]][github-release-page]
 
 
-HackMD lets you create realtime collaborative markdown notes on all platforms.  
-Inspired by Hackpad, with more focus on speed and flexibility.  
+HackMD lets you create realtime collaborative markdown notes on all platforms.
+Inspired by Hackpad, with more focus on speed and flexibility.
 Still in the early stage, feel free to fork or contribute to HackMD.
 
 Thanks for using! :smile:
 
-[docker-hackmd](https://github.com/hackmdio/docker-hackmd)
----
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+# Table of Contents
 
-Before you go too far, here is the great docker repo for HackMD.  
-With docker, you can deploy a server in minutes without any downtime.
+- [Browsers Requirement](#browsers-requirement)
+- [Installation](#installation)
+  - [Getting started (Native install)](#getting-started-native-install)
+    - [Prerequisite](#prerequisite)
+    - [Instructions](#instructions)
+  - [Heroku Deployment](#heroku-deployment)
+  - [HackMD by docker container](#hackmd-by-docker-container)
+- [Upgrade](#upgrade)
+  - [Native setup](#native-setup)
+- [Configuration](#configuration)
+  - [Environment variables (will overwrite other server configs)](#environment-variables-will-overwrite-other-server-configs)
+  - [Application settings `config.json`](#application-settings-configjson)
+  - [Third-party integration api key settings](#third-party-integration-api-key-settings)
+  - [Third-party integration oauth callback urls](#third-party-integration-oauth-callback-urls)
+- [Developer Notes](#developer-notes)
+  - [Structure](#structure)
+  - [Operational Transformation](#operational-transformation)
+- [License](#license)
 
-Heroku Deployment
----
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-You can quickly setup a sample heroku hackmd application by clicking the button below.
+# Browsers Requirement
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
-
-[migration-to-0.5.0](https://github.com/hackmdio/migration-to-0.5.0)
----
-
-We don't use LZString to compress socket.io data and DB data after version 0.5.0.  
-Please run the migration tool if you're upgrading from the old version.
-
-[migration-to-0.4.0](https://github.com/hackmdio/migration-to-0.4.0)
----
-
-We've dropped MongoDB after version 0.4.0.  
-So here is the migration tool for you to transfer the old DB data to the new DB.  
-This tool is also used for official service.
-
-Browsers Requirement
----
-
-- Chrome >= 47, Chrome for Android >= 47
-- Safari >= 9, iOS Safari >= 8.4
-- Firefox >= 44
-- IE >= 9, Edge >= 12
-- Opera >= 34, Opera Mini not supported
+- ![Chrome](http://browserbadge.com/chrome/47/18px) Chrome >= 47, Chrome for Android >= 47
+- ![Safari](http://browserbadge.com/safari/9/18px) Safari >= 9, iOS Safari >= 8.4
+- ![Firefox](http://browserbadge.com/firefox/44/18px) Firefox >= 44
+- ![IE](http://browserbadge.com/ie/9/18px) IE >= 9, Edge >= 12
+- ![Opera](http://browserbadge.com/opera/34/18px) Opera >= 34, Opera Mini not supported
 - Android Browser >= 4.4
 
-Prerequisite
----
+# Installation
+
+## Getting started (Native install)
+
+### Prerequisite
 
 - Node.js 6.x or up (test up to 7.5.0)
 - Database (PostgreSQL, MySQL, MariaDB, SQLite, MSSQL) use charset `utf8`
 - npm (and its dependencies, especially [uWebSockets](https://github.com/uWebSockets/uWebSockets#nodejs-developers), [node-gyp](https://github.com/nodejs/node-gyp#installation))
 
-Get started
----
+### Instructions
 
 1. Download a release and unzip or clone into a directory
 2. Enter the directory and type `bin/setup`, which will install npm dependencies and create configs. The setup script is written in Bash, you would need bash as a prerequisite.
@@ -67,8 +67,37 @@ Get started
 5. Build front-end bundle by `npm run build` (use `npm run dev` if you are in development)
 6. Run the server as you like (node, forever, pm2)
 
-Upgrade guide
----
+## Heroku Deployment
+
+You can quickly setup a sample heroku hackmd application by clicking the button below.
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+## HackMD by docker container
+[![Try in PWD](https://cdn.rawgit.com/play-with-docker/stacks/cff22438/assets/images/button.png)](http://play-with-docker.com?stack=https://github.com/hackmdio/docker-hackmd/raw/master/docker-compose.yml&stack_name=hackmd)
+
+
+**Debian-based version:**
+
+[![latest](https://images.microbadger.com/badges/version/hackmdio/hackmd.svg)](https://microbadger.com/images/hackmdio/hackmd "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/image/hackmdio/hackmd.svg)](https://microbadger.com/images/hackmdio/hackmd "Get your own image badge on microbadger.com")
+
+
+**Alpine-based version:**
+
+[![latest-alpine](https://images.microbadger.com/badges/version/hackmdio/hackmd:latest-alpine.svg)](https://microbadger.com/images/hackmdio/hackmd:latest-alpine "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/image/hackmdio/hackmd:latest-alpine.svg)](https://microbadger.com/images/hackmdio/hackmd:latest-alpine "Get your own image badge on microbadger.com")
+
+The easiest way to setup HackMD using docker are using the following three commands:
+
+```console
+git clone https://github.com/hackmdio/docker-hackmd.git
+cd docker-hackmd
+docker-compose up
+```
+Read more about it in the [docker repository…](https://github.com/hackmdio/docker-hackmd)
+
+# Upgrade
+
+## Native setup
 
 If you are upgrading HackMD from an older version, follow these steps:
 
@@ -81,23 +110,18 @@ If you are upgrading HackMD from an older version, follow these steps:
 6. Run `node_modules/.bin/sequelize db:migrate`, this step will migrate your db to the latest schema
 7. Start your whole new server!
 
-Structure
----
+* [migration-to-0.5.0](https://github.com/hackmdio/migration-to-0.5.0)
 
-```text
-hackmd/
-├── tmp/            --- temporary files
-├── docs/           --- document files
-├── lib/            --- server libraries
-└── public/         --- client files
-    ├── css/        --- css styles
-    ├── js/         --- js scripts
-    ├── vendor/     --- vendor includes
-    └── views/      --- view templates
-```
+We don't use LZString to compress socket.io data and DB data after version 0.5.0.
+Please run the migration tool if you're upgrading from the old version.
 
-Configuration files
----
+* [migration-to-0.4.0](https://github.com/hackmdio/migration-to-0.4.0)
+
+We've dropped MongoDB after version 0.4.0.
+So here is the migration tool for you to transfer the old DB data to the new DB.
+This tool is also used for official service.
+
+# Configuration
 
 There are some configs you need to change in the files below
 
@@ -105,8 +129,7 @@ There are some configs you need to change in the files below
 ./config.json      ----application settings
 ```
 
-Environment variables (will overwrite other server configs)
----
+## Environment variables (will overwrite other server configs)
 
 | variables | example values | description |
 | --------- | ------ | ----------- |
@@ -133,6 +156,9 @@ Environment variables (will overwrite other server configs)
 | HMD_GITLAB_BASEURL | no example | GitLab authentication endpoint, set to use other endpoint than GitLab.com (optional) |
 | HMD_GITLAB_CLIENTID | no example | GitLab API client id |
 | HMD_GITLAB_CLIENTSECRET | no example | GitLab API client secret |
+| HMD_MATTERMOST_BASEURL | no example | Mattermost authentication endpoint |
+| HMD_MATTERMOST_CLIENTID | no example | Mattermost API client id |
+| HMD_MATTERMOST_CLIENTSECRET | no example | Mattermost API client secret |
 | HMD_DROPBOX_CLIENTID | no example | Dropbox API client id |
 | HMD_DROPBOX_CLIENTSECRET | no example | Dropbox API client secret |
 | HMD_GOOGLE_CLIENTID | no example | Google API client id |
@@ -145,9 +171,10 @@ Environment variables (will overwrite other server configs)
 | HMD_LDAP_SEARCHFILTER | `(uid={{username}})` | LDAP filter to search with |
 | HMD_LDAP_SEARCHATTRIBUTES | no example | LDAP attributes to search with |
 | HMD_LDAP_TLS_CA | `server-cert.pem, root.pem` | Root CA for LDAP TLS in PEM format (use comma to separate) |
-| HMD_LDAP_PROVIDERNAME | `My institution` | Optional name to be displayed at login form indicating the LDAP provider | 
+| HMD_LDAP_PROVIDERNAME | `My institution` | Optional name to be displayed at login form indicating the LDAP provider |
 | HMD_IMGUR_CLIENTID | no example | Imgur API client id |
 | HMD_EMAIL | `true` or `false` | set to allow email signin |
+| HMD_ALLOW_PDF_EXPORT | `true` or `false` | Enable or disable PDF exports |
 | HMD_ALLOW_EMAIL_REGISTER | `true` or `false` | set to allow email register (only applied when email is set, default is `true`) |
 | HMD_IMAGE_UPLOAD_TYPE | `imgur`, `s3` or `filesystem` | Where to upload image. For S3, see our [S3 Image Upload Guide](docs/guides/s3-image-upload.md) |
 | HMD_S3_ACCESS_KEY_ID | no example | AWS access key id |
@@ -159,8 +186,7 @@ Environment variables (will overwrite other server configs)
 | HMD_HSTS_MAX_AGE | `31536000` | max duration in seconds to tell clients to keep HSTS status (default is a year) |
 | HMD_HSTS_PRELOAD | `true` | whether to allow preloading of the site's HSTS status (e.g. into browsers) |
 
-Application settings `config.json`
----
+## Application settings `config.json`
 
 | variables | example values | description |
 | --------- | ------ | ----------- |
@@ -204,17 +230,15 @@ Application settings `config.json`
 | s3 | `{ "accessKeyId": "YOUR_S3_ACCESS_KEY_ID", "secretAccessKey": "YOUR_S3_ACCESS_KEY", "region": "YOUR_S3_REGION" }` | When `imageUploadType` be set to `s3`, you would also need to setup this key, check our [S3 Image Upload Guide](docs/guides/s3-image-upload.md) |
 | s3bucket | `YOUR_S3_BUCKET_NAME` | bucket name when `imageUploadType` is set to `s3` |
 
-Third-party integration api key settings
----
+## Third-party integration api key settings
 
 | service | settings location | description |
 | ------- | --------- | ----------- |
-| facebook, twitter, github, gitlab, dropbox, google, ldap | environment variables or `config.json` | for signin |
+| facebook, twitter, github, gitlab, mattermost, dropbox, google, ldap | environment variables or `config.json` | for signin |
 | imgur | environment variables or `config.json` | for image upload |
 | google drive(`google/apiKey`, `google/clientID`), dropbox(`dropbox/appKey`) | `config.json` | for export and import |
 
-Third-party integration oauth callback urls
----
+## Third-party integration oauth callback urls
 
 | service | callback url (after the server url) |
 | ------- | --------- |
@@ -222,16 +246,36 @@ Third-party integration oauth callback urls
 | twitter | `/auth/twitter/callback` |
 | github | `/auth/github/callback` |
 | gitlab | `/auth/gitlab/callback` |
+| mattermost | `/auth/mattermost/callback` |
 | dropbox | `/auth/dropbox/callback` |
 | google | `/auth/google/callback` |
 
-Operational Transformation
----
+# Developer Notes
 
-From 0.3.2, we started supporting operational transformation.  
-It makes concurrent editing safe and will not break up other users' operations.  
-Additionally, now can show other clients' selections.  
+## Structure
+
+```text
+hackmd/
+├── tmp/            --- temporary files
+├── docs/           --- document files
+├── lib/            --- server libraries
+└── public/         --- client files
+    ├── css/        --- css styles
+    ├── js/         --- js scripts
+    ├── vendor/     --- vendor includes
+    └── views/      --- view templates
+```
+
+## Operational Transformation
+
+From 0.3.2, we started supporting operational transformation.
+It makes concurrent editing safe and will not break up other users' operations.
+Additionally, now can show other clients' selections.
 See more at [http://operational-transformation.github.io/](http://operational-transformation.github.io/)
+
+
+
+# License
 
 **License under MIT.**
 

@@ -373,22 +373,19 @@ export function finishView (view) {
       var $value = $(value)
       const $ele = $(value).closest('pre')
 
-      let mermaidError = null
-      window.mermaid.parseError = (err, hash) => {
-        mermaidError = err
+      window.mermaid.mermaidAPI.parse($value.text())
+      $ele.addClass('mermaid')
+      $ele.html($value.text())
+      window.mermaid.init(undefined, $ele)
+    } catch (err) {
+      var errormessage = err
+      if (err.str) {
+        errormessage = err.str
       }
 
-      if (window.mermaidAPI.parse($value.text())) {
-        $ele.addClass('mermaid')
-        $ele.html($value.text())
-        window.mermaid.init(undefined, $ele)
-      } else {
-        throw new Error(mermaidError)
-      }
-    } catch (err) {
       $value.unwrap()
-      $value.parent().append('<div class="alert alert-warning">' + err + '</div>')
-      console.warn(err)
+      $value.parent().append('<div class="alert alert-warning">' + errormessage + '</div>')
+      console.warn(errormessage)
     }
   })
   // abc.js
@@ -1092,7 +1089,7 @@ const gistPlugin = new Plugin(
 
     (match, utils) => {
       const gistid = match[1]
-      const code = `<code data-gist-id="${gistid}"/>`
+      const code = `<code data-gist-id="${gistid}"></code>`
       return code
     }
 )
